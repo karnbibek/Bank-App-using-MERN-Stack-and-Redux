@@ -1,0 +1,13 @@
+export const AUTH_USER = 'auth_user';
+export const REGISTER_USER = 'register_user';
+export const AUTH_ERROR = 'auth_error';
+export const SUCCESS_MESSAGE = 'success_message';
+export const USER_TRANSACTIONS = 'user_transactions';
+export const WITHDRAW_MONEY = 'withdraw_money';
+export const DEPOSIT_MONEY = 'deposit_money';
+export const USER_BALANCE = 'user_balance';
+export const USER_LOANS = 'user_loans';
+export const ALLUSER_TRANSACTIONS = 'alluser_transactions';
+export const EDITLOAN_BYAGENT = 'editloan_byagent';
+export const REQUESTLOAN_BYAGENT = 'requestloan_byagent';
+export const UPDATELOANSTATUS_BANKER = 'updateloanstatus_banker';
