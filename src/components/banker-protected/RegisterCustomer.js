@@ -8,7 +8,7 @@ import requireAuth from '../../authentication/requireAuth';
 
 class RegisterCustomer extends React.Component {
     onSubmit = formProps => {
-        this.props.register('register-customer', this.props.token, formProps, () => {
+        this.props.register('register-customer', this.props.state.auth.storedData.token, formProps, () => {
             this.props.history.push('/banker');
         })
     }
@@ -24,7 +24,8 @@ class RegisterCustomer extends React.Component {
 }
 
 function mapStateToProps(state) {
-    return { errorMessage: state.auth.errorMessage, token: state.auth.storedData.token };
+    return { state };
+    // return { errorMessage: state.auth.errorMessage, token: state.auth.storedData.token };
 }
 
 export default compose(

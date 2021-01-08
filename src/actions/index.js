@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { BASE_API_URL } from '../api/backendApi';
 import { AUTH_USER, AUTH_ERROR, USER_TRANSACTIONS, WITHDRAW_MONEY, DEPOSIT_MONEY, USER_BALANCE, USER_LOANS, ALLUSER_TRANSACTIONS, EDITLOAN_BYAGENT, REQUESTLOAN_BYAGENT, SUCCESS_MESSAGE, UPDATELOANSTATUS_BANKER } from './types';
 
 export const signin = ( route ,formProps, callback) => async dispatch => {
     try {
-        const response = await axios.post(`http://localhost:3001/accounts/${route}`, {
+        const response = await axios.post(`${BASE_API_URL}/accounts/${route}`, {
             formProps
         });
 
@@ -16,7 +17,6 @@ export const signin = ( route ,formProps, callback) => async dispatch => {
             // balance: response.data.balance
         }));
         callback();
-        console.log('callback called');
     } catch (e) {
         dispatch({ type: AUTH_ERROR, payload: e.response.data.message })
     }
@@ -24,7 +24,7 @@ export const signin = ( route ,formProps, callback) => async dispatch => {
 
 export const register = ( route, token, formProps, callback) => async dispatch => {
     try {
-        const response = await axios.post(`http://localhost:3001/accounts/${route}`, {
+        const response = await axios.post(`${BASE_API_URL}/accounts/${route}`, {
             formProps
         },
         {
@@ -33,7 +33,7 @@ export const register = ( route, token, formProps, callback) => async dispatch =
             }
         }
         );
-
+console.log(response.data);
         // dispatch({ type: AUTH_USER, payload: response.data });
         dispatch({ type: SUCCESS_MESSAGE, payload: "User created successfully!" });
         callback();
@@ -54,7 +54,7 @@ export const signout = () => {
 
 export const userBalance = ( uid, token ) => async dispatch => {
     try {
-        const response = await axios.get(`http://localhost:3001/transactions/user-balance?uid=`+uid
+        const response = await axios.get(`${BASE_API_URL}/transactions/user-balance?uid=`+uid
         , {
             headers: {
                 Authorization: token
@@ -68,7 +68,7 @@ export const userBalance = ( uid, token ) => async dispatch => {
 
 export const userTransactions = ( uid, token ) => async dispatch => {
     try {
-        const response = await axios.get(`http://localhost:3001/transactions/user-transaction?uid=`+uid
+        const response = await axios.get(`${BASE_API_URL}/transactions/user-transaction?uid=`+uid
         , {
             headers: {
                 Authorization: token
@@ -82,7 +82,7 @@ export const userTransactions = ( uid, token ) => async dispatch => {
 
 export const userTransactionsByAgent = ( uid, token, user ) => async dispatch => {
     try {
-        const response = await axios.get(`http://localhost:3001/transactions/${user}?uid=`+uid
+        const response = await axios.get(`${BASE_API_URL}/transactions/${user}?uid=`+uid
         , {
             headers: {
                 Authorization: token
@@ -97,7 +97,7 @@ export const userTransactionsByAgent = ( uid, token, user ) => async dispatch =>
 
 export const userLoanDetails = ( uid, token, role ) => async dispatch => {
     try {
-        const response = await axios.get(`http://localhost:3001/user/loan/${role}/loan-details?uid=`+uid
+        const response = await axios.get(`${BASE_API_URL}/user/loan/${role}/loan-details?uid=`+uid
         , {
             headers: {
                 Authorization: token
@@ -111,7 +111,7 @@ export const userLoanDetails = ( uid, token, role ) => async dispatch => {
 
 export const withdrawMoney = ( amount, token, callback ) => async dispatch => {
     try {
-        const response = await axios.post(`http://localhost:3001/transactions/withdraw-money`
+        const response = await axios.post(`${BASE_API_URL}/transactions/withdraw-money`
         , {
             amount
         }
@@ -131,7 +131,7 @@ export const withdrawMoney = ( amount, token, callback ) => async dispatch => {
 export const depositMoney = ( amount, token, callback ) => async dispatch => {
     try {
         console.log(token);
-        const response = await axios.post(`http://localhost:3001/transactions/deposit-money`
+        const response = await axios.post(`${BASE_API_URL}/transactions/deposit-money`
         , {
             amount
         }
@@ -150,7 +150,7 @@ export const depositMoney = ( amount, token, callback ) => async dispatch => {
 
 export const allUsersAccountDetails = ( token, role ) => async dispatch => {
     try {
-        const response = await axios.get(`http://localhost:3001/accounts/${role}/customerDetails`
+        const response = await axios.get(`${BASE_API_URL}/accounts/${role}/customerDetails`
         , {
             headers: {
                 Authorization: token
@@ -165,7 +165,7 @@ export const allUsersAccountDetails = ( token, role ) => async dispatch => {
 export const editLoanAmountByAgent = ( loanAmount, token, uid, lid, callback ) => async dispatch => {
     try {
         console.log(token);
-        const response = await axios.patch(`http://localhost:3001/user/loan/agent/edit-loan?uid=` + uid + `&lid=` + lid
+        const response = await axios.patch(`${BASE_API_URL}/user/loan/agent/edit-loan?uid=` + uid + `&lid=` + lid
         , {
             loanAmount
         }
@@ -184,7 +184,7 @@ export const editLoanAmountByAgent = ( loanAmount, token, uid, lid, callback ) =
 
 export const requestLoanByAgent = ( loanAmount, duration, rateOfInterest, uid, token, callback ) => async dispatch => {
     try {
-        const response = await axios.post(`http://localhost:3001/user/loan/agent/requestLoan?uid=` + uid
+        const response = await axios.post(`${BASE_API_URL}/user/loan/agent/requestLoan?uid=` + uid
         , {
             loanAmount,
             duration, 
@@ -204,7 +204,7 @@ export const requestLoanByAgent = ( loanAmount, duration, rateOfInterest, uid, t
 
 export const updateLoanStatusByBanker = ( loanStatus, token, uid, lid, callback ) => async dispatch => {
     try {
-        const response = await axios.patch(`http://localhost:3001/user/loan/banker/update-loan-status?uid=` + uid + `&lid=` + lid
+        const response = await axios.patch(`${BASE_API_URL}/user/loan/banker/update-loan-status?uid=` + uid + `&lid=` + lid
         , {
             loanStatus
         }

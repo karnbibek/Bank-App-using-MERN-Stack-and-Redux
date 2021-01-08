@@ -13,6 +13,7 @@ const INITIAL_STATE = {
     updateLoanStatusBanker: ''
 };
 
+// eslint-disable-next-line
 export default function(state= INITIAL_STATE, action) {
     switch (action.type) {
         case AUTH_USER:

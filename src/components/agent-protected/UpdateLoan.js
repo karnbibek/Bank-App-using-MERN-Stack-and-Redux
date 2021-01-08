@@ -43,7 +43,10 @@ class UpdateLoan extends Component {
     }
 
     renderLinks(handleSubmit) {
-        if(this.props.auth.role !== "agent") {
+        if (!this.props.auth) {
+            this.props.history.push('/');
+        } 
+        else if(this.props.auth.role !== "agent") {
             return (
                  <div className="ui warning message" style={{marginBottom: "20px"}}>
                     <div className="header danger">

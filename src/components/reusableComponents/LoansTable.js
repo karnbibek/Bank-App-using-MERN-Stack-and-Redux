@@ -51,8 +51,7 @@ class LoansTable extends React.Component {
     }
 
     render() {
-        const { data, role, email } = this.props;
-
+        const { data, role } = this.props;
         return (
             <div>
                 <table className="ui selectable celled table unstackable" style={{marginBottom:"30px"}}>

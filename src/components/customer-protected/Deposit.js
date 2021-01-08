@@ -41,10 +41,13 @@ class Deposit extends Component {
         this.props.history.push('/customer');
     }
 
-    render() {
-        const { handleSubmit } = this.props;
-        return (
-            <div style={{marginLeft: "10%",marginRight:"10%"}}>
+    renderLinks(handleSubmit) {
+        if (!this.props.auth) {
+            this.props.history.push('/');
+        }
+        else {
+            return(
+                <div style={{marginLeft: "10%",marginRight:"10%"}}>
                     <h2 style={{textAlign:"center", background:"green", color: "white", }}>Deposit Money</h2>
                 <div className="ui piled segment" style={{ marginTop: "25px", marginBottom: "25px" }}>
                     {this.props.auth.role === "customer" ? 
@@ -67,6 +70,17 @@ class Deposit extends Component {
                     </div>
                     }
                 </div>
+            </div>
+            );
+        }
+    }
+
+    render() {
+        // eslint-disable-next-line
+        const { handleSubmit } = this.props;
+        return (
+            <div>
+                this.renderLinks(handleSubmit)
             </div>
         );
     }

@@ -7,7 +7,7 @@ import requireAuth from '../../authentication/requireAuth';
 import * as actions from '../../actions';
 
 class UpdateLoanStatus extends Component {
-    
+
     renderError({ error, touched }) {
         if (touched && error) {
             return (
@@ -43,7 +43,10 @@ class UpdateLoanStatus extends Component {
     }
 
     renderLinks(handleSubmit) {
-        if(this.props.role !== "banker") {
+        if (!this.props.auth) {
+            this.props.history.push('/');
+        }
+        else if(this.props.state.auth.storedData.role !== "banker") {
             return (
                  <div className="ui warning message" style={{marginBottom: "20px"}}>
                     <div className="header danger">
@@ -70,9 +73,9 @@ class UpdateLoanStatus extends Component {
                     <h2>Loan Amount : {this.props.location.user.amount.loanAmount}</h2>
                     <Field name="status" component={this.renderInput} label="Update Loan Status : " type="text" />
                     
-                    {this.props.errorMessage ?
+                    {this.props.state.auth.errorMessage ?
                     <div className="ui error message">
-                        {this.props.errorMessage}
+                        {this.props.state.auth.errorMessage}
                     </div>
                     : ''
                     }
@@ -109,7 +112,8 @@ const validate = formValues => {
 
 function mapStateToProps(state) {
     // console.log(state.auth.storedData.role);
-    return { errorMessage: state.auth.errorMessage, role: state.auth.storedData.role };
+    // return { errorMessage: state.auth.errorMessage, role: state.auth.storedData.role };
+    return { state };
 }
 
 export default compose(

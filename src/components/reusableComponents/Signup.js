@@ -31,17 +31,17 @@ class Signup extends Component {
 
         return (
             <div className="ui red piled segment" style={{ margin: "15px" }}>
-                <h2 class="ui center aligned icon header purple">
+                <h2 className="ui center aligned icon header purple">
                     Register New {userType ? userType : "User"}
                 </h2>
                 <form onSubmit={handleSubmit(this.props.onSubmit)} className="ui form error" style={{ marginLeft:"20px", marginRight: "20px"}}>
                     <Field name="name" component={this.renderInput} type="text" label="Name : " />
                     <Field name="email" component={this.renderInput} type="email" label="Email : " />
                     {userType === "Customer" ? <Field name="balance" component={this.renderInput} label="Starting Balance : " type="text" /> : null}
-                    <Field name="password" component={this.renderInput} type="password" label="Password : " />
                     {userType === "Customer" ? 
                         <Field name="accountType" component={this.renderInput} type="text" label="Account Type : " />
                     : null}
+                    <Field name="password" component={this.renderInput} type="password" label="Password : " />
                     <Field name="confirmPassword" component={this.renderInput} type="password" label="Confirm Password : " />
                     <button className="ui primary button" action="submit">Register</button>
                     <button className="ui red button" onClick={onCancel}>Cancel</button>

@@ -8,7 +8,7 @@ import SignupForm from '../../components/reusableComponents/Signup';
 
 class RegisterBanker extends React.Component {
     onSubmit = formProps => {
-        this.props.register('register-banker', this.props.token, formProps, () => {
+        this.props.register('register-banker', this.props.state.auth.storedData.token, formProps, () => {
             this.props.history.push('/banker');
         })
     }
@@ -24,7 +24,8 @@ class RegisterBanker extends React.Component {
 }
 
 function mapStateToProps(state) {
-    return { errorMessage: state.auth.errorMessage, token: state.auth.storedData.token };
+    return { state };
+    // return { errorMessage: state.auth.errorMessage, token: state.auth.storedData.token };
 }
 
 export default compose(

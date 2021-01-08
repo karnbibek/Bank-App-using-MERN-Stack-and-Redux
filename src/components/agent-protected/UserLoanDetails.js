@@ -25,7 +25,7 @@ class UserLoanDetails extends React.Component {
                 </div>
             )
         }}
-        if (!this.props.loans) {
+        if (!this.props.state.auth.userLoans) {
             return (
                 <div className="ui segment" style={{marginBottom:"30px"}}>
                     <div className="ui active inverted dimmer">
@@ -34,11 +34,19 @@ class UserLoanDetails extends React.Component {
                 </div>
             );
             // this.props.history.push('/agent');
-        } 
+        } else if (this.props.state.auth.userLoans.length === 0) {
+            return (
+                <div className="ui segment" style={{marginBottom:"30px"}}>
+                    <div className="ui active inverted dimmer">
+                        <div className="ui text">Loans not found for the provided user. Please select a user to see the details.</div>
+                    </div>
+                </div>
+            );
+        }
         else {
             return (
                 <div>
-                    <LoansTable data={this.props.loans} role={this.props.auth.role} email={this.props.auth.email} />
+                    <LoansTable data={this.props.state.auth.userLoans} role={this.props.auth.role} email={this.props.auth.email} />
                 </div>
             );
         }
@@ -55,6 +63,7 @@ class UserLoanDetails extends React.Component {
 }
 // var role = this.props.auth.role;
 function mapStateToProps(state) {
-    return { uid: state.auth.storedData.userId, loans: state.auth.userLoans, balance: state.auth.balance };
+    // return { uid: state.auth.storedData.userId, loans: state.auth.userLoans, balance: state.auth.balance };
+    return { state };
 }
 export default connect(mapStateToProps, actions)(requireAuth(UserLoanDetails));

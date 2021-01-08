@@ -30,7 +30,6 @@ class Withdraw extends Component {
     }
 
     onSubmit = formProps => {
-        console.log(formProps.amount);
         this.props.withdrawMoney(formProps.amount,this.props.auth.token, () => {
             this.props.history.push('/customer');
             // console.log(this.props);
@@ -41,9 +40,12 @@ class Withdraw extends Component {
         this.props.history.push('/customer');
     }
 
-    render() {
-        const { handleSubmit } = this.props;
-        return (
+    renderLinks(handleSubmit) {
+        if (!this.props.auth) {
+            this.props.history.push('/');
+        }
+        else {
+            return (
                 <div style={{ marginLeft:"10%", marginRight: "10%"}}>
                     <h2 style={{textAlign:"center", background:"red", color: "white"}}>Withdraw Money</h2>
                     <div className="ui piled segment" style={{ marginTop: "25px", marginBottom:"25px" }}>
@@ -68,6 +70,14 @@ class Withdraw extends Component {
                         }
                     </div>
                 </div>
+            );
+        }
+    }
+
+    render() {
+        const { handleSubmit } = this.props;
+        return (
+                <div>{this.renderLinks(handleSubmit)}</div>
         );
     }
 }

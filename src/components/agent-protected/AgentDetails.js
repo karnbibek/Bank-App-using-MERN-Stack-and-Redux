@@ -8,11 +8,18 @@ import AllAccountDetails from '../reusableComponents/AllAccountDetails';
 class AgentDetails extends React.Component {
     componentDidMount() {
         // console.log(this.props);
-        this.props.allUsersAccountDetails(this.props.auth.token, "agent");
+        if(!this.props.auth) {
+            this.props.history.push('/');
+        } else {
+            this.props.allUsersAccountDetails(this.props.auth.token, "agent");
+        }
     }
     
     renderLinks() {
-        if(this.props.auth.role !== "agent") {
+        if (!this.props.auth) {
+            this.props.history.push('/');
+        } 
+        else if(this.props.auth.role !== "agent") {
             return (
                 <div className="ui warning message" style={{marginBottom: "20px"}}>
                     <div className="header danger">
@@ -30,7 +37,16 @@ class AgentDetails extends React.Component {
                     </div>
                 </div>
             );
-        } else {
+        } else if (this.props.state.auth.allUserTransactions.length === 0) {
+            return (
+                <div className="ui segment" style={{marginBottom:"30px"}}>
+                    <div className="ui active inverted dimmer">
+                        <div className="ui text">No Customers Found!!.</div>
+                    </div>
+                </div>
+            );
+        }
+        else {
             return(
                 <AllAccountDetails data={this.props.state.auth.allUserTransactions} user="agent" />
             )

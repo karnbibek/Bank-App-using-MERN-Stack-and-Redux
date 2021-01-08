@@ -8,13 +8,21 @@ import TransactionsTable from '../reusableComponents/TransactionsTable';
 class CustomerLogin extends React.Component {
     componentDidMount() {
         // console.log(this.props);
-        this.props.userTransactions(this.props.auth.userId,this.props.auth.token);
-        this.props.userBalance(this.props.auth.userId,this.props.auth.token);
+        if (!this.props.auth) {
+            this.props.history.push('/');
+        }
+        else {
+            this.props.userTransactions(this.props.auth.userId,this.props.auth.token);
+            this.props.userBalance(this.props.auth.userId,this.props.auth.token);
+        }
     }
 
     renderLinks() {
         // console.log(this.props.auth.role);
-        if(this.props.auth.role !== "customer") {
+        if (!this.props.auth) {
+            this.props.history.push('/');
+        }
+        else if(this.props.auth.role !== "customer") {
             return (
                  <div className="ui warning message" style={{marginBottom: "20px"}}>
                     <div className="header danger">
@@ -24,7 +32,7 @@ class CustomerLogin extends React.Component {
             )
         }
 
-        if (!this.props.transactions) {
+        if (!this.props.state.auth.userTransactions) {
             return (
                 <div className="ui segment" style={{marginBottom:"30px"}}>
                     <div className="ui active inverted dimmer">
@@ -35,7 +43,7 @@ class CustomerLogin extends React.Component {
         } else {
             return (
                 <div>
-                    <TransactionsTable data={this.props.transactions} balance={this.props.balance} />
+                    <TransactionsTable data={this.props.state.auth.userTransactions} balance={this.props.balance} />
                 </div>
             );
         }
@@ -52,6 +60,7 @@ class CustomerLogin extends React.Component {
 // var role = this.props.auth.role;
 function mapStateToProps(state) {
     // console.log(state);
-    return { uid: state.auth.storedData.userId, transactions: state.auth.userTransactions, balance: state.auth.balance };
+    // return { uid: state.auth.storedData.userId, transactions: state.auth.userTransactions, balance: state.auth.balance };
+    return { state };
 }
 export default connect(mapStateToProps, actions)(requireAuth(CustomerLogin));

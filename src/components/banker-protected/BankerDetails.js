@@ -7,13 +7,16 @@ import AllAccountDetails from '../reusableComponents/AllAccountDetails';
 
 class BankerDetails extends React.Component {
     componentDidMount() {
-        console.log(this.props)
+        if(!this.props.auth) {
+            this.props.history.push('/');
+        } else {
         this.props.allUsersAccountDetails(this.props.auth.token, "banker");
+        }
     }
     
     renderLinks() {
         if (!this.props.auth) {
-            console.log(this.props);
+            // console.log(this.props);
             this.props.history.push('/');
             return (
                 <div className="ui warning message" style={{marginBottom: "20px"}}>
@@ -62,4 +65,4 @@ function mapStateToProps(state) {
     return {state};
 }
 
-export default connect(mapStateToProps, actions)(BankerDetails);
+export default connect(mapStateToProps, actions)(requireAuth(BankerDetails));

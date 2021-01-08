@@ -7,12 +7,19 @@ import LoansTable from '../reusableComponents/LoansTable';
 
 class LoanDetails extends React.Component {
     componentDidMount() {
-        this.props.userLoanDetails(this.props.auth.userId,this.props.auth.token,this.props.auth.role);
+        if (!this.props.auth) {
+            this.props.history.push('/');
+        } else {
+            this.props.userLoanDetails(this.props.auth.userId,this.props.auth.token,this.props.auth.role);
+        }
     }
 
     renderLinks() {
         // console.log(this.props.auth.role);
-        if(this.props.auth.role !== "customer") {
+        if (!this.props.auth) {
+            this.props.history.push('/');
+        }
+        else if (this.props.auth.role !== "customer") {
             return (
                  <div className="ui warning message" style={{marginBottom: "20px"}}>
                     <div className="header danger">
@@ -22,7 +29,7 @@ class LoanDetails extends React.Component {
             )
         }
 
-        if (!this.props.loans) {
+        if (!this.props.state.auth.userLoans) {
             return (
                 <div className="ui segment" style={{margin:"30px"}}>
                     <div className="ui active inverted dimmer">
@@ -33,7 +40,7 @@ class LoanDetails extends React.Component {
         } else {
             return (
                 <div>
-                    <LoansTable data={this.props.loans} role={this.props.auth.role} />
+                    <LoansTable data={this.props.state.auth.userLoans} role={this.props.auth.role} />
                 </div>
             );
         }
@@ -50,7 +57,8 @@ class LoanDetails extends React.Component {
 // var role = this.props.auth.role;
 function mapStateToProps(state) {
     // console.log(state);
-    return { uid: state.auth.storedData.userId, loans: state.auth.userLoans };
+    // return { uid: state.auth.storedData.userId, loans: state.auth.userLoans };
+    return { state };
 }
 
 export default connect(mapStateToProps, actions)(requireAuth(LoanDetails));

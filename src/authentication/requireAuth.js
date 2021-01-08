@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+
+// eslint-disable-next-line
 export default (ComposedComponent) => {
    class requireAuth extends Component {
       componentDidMount() {
