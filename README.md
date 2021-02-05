@@ -3,6 +3,8 @@ Customer - email: testc@test.com password: tester2
 Agent - email: testa@test.com password: testers2
 Banker - email: tests@test.com password: testers2
 
+Note: Backend part is deployed in heroku.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
